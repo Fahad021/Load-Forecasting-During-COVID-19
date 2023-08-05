@@ -47,7 +47,7 @@ epochs = 50
 
 with open('Data_Processed_New/Boston_data_all.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
-    data_all_phil = [row for row in reader]
+    data_all_phil = list(reader)
 
 data_all_phil=np.array(data_all_phil, dtype=float)
 dataset_phil = pd.DataFrame(np.copy(data_all_phil))

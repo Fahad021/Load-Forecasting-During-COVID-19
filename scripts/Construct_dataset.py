@@ -20,17 +20,17 @@ s='France'
 num_of_days=91
 
 
-Weather_data=pd.read_csv('../Europe/%s_Training3.csv'%s, header=None)
+Weather_data = pd.read_csv(f'../Europe/{s}_Training3.csv', header=None)
 inds = pd.isnull(Weather_data).any(1).nonzero()[0]
 print("Nan Val", inds)
 
-with open('../Mobility_Data/Mobility_new/%s_Mobility.csv'%s, 'r') as csvfile:
+with open(f'../Mobility_Data/Mobility_new/{s}_Mobility.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
-    Mobility_data = [row for row in reader]
+    Mobility_data = list(reader)
 
 with open('Data_Processed/Holiday_Europe.csv', 'r') as csvfile:
     reader = csv.reader(csvfile)
-    Holiday_data = [row for row in reader]
+    Holiday_data = list(reader)
 Weather_data = Weather_data.values
 print("Load and Weather", np.shape(Weather_data))
 
@@ -70,21 +70,17 @@ print("Whole data without mobility", np.shape(training_mat))
 
 
 
-with open('Data_Processed_New/%s_data_all.csv'%s, 'wb') as f:
+with open(f'Data_Processed_New/{s}_data_all.csv', 'wb') as f:
     writer = csv.writer(f)
     writer.writerows(training_mat)
 
-num=0
-while num<num_of_days:
+for num in range(num_of_days):
     for hours in range(24):
         mobility_mat[num*24+hours] = Mobility_data[num]
-    num+=1
-
-
 training_mat2=np.concatenate((Weather_data[-24*num_of_days:], index_mat[-24*num_of_days:], mobility_mat), axis=1)
 print("Whole data with mobility", np.shape(training_mat2))
 
-with open('Data_Processed_New/%s_mobility_all.csv'%s, 'wb') as f:
+with open(f'Data_Processed_New/{s}_mobility_all.csv', 'wb') as f:
     writer = csv.writer(f)
     writer.writerows(training_mat2)
 

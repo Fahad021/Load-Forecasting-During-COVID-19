@@ -10,8 +10,8 @@ Goog_loc='Google/Seattle.csv'
 Apple_loc='Apple/Seattle.csv'
 Location='Seattle'
 
-df1=pd.read_csv('%s'%Goog_loc, header=None)
-df2=pd.read_csv('%s'%Apple_loc, header=None).T
+df1 = pd.read_csv(f'{Goog_loc}', header=None)
+df2 = pd.read_csv(f'{Apple_loc}', header=None).T
 
 #The date shift of apple data and google data based on the their report updates
 start_index=34
@@ -26,7 +26,7 @@ Mobi_data=np.concatenate((apple_data, goog_data[start_index:end_index]), axis=1)
 
 
 
-with open('%s_Mobility.csv'%Location, 'wb') as f:
+with open(f'{Location}_Mobility.csv', 'wb') as f:
     writer = csv.writer(f)
     writer.writerows(Mobi_data)
 
